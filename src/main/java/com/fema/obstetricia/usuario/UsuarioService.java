@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.fema.obstetricia.enums.Escolaridade;
 import com.fema.obstetricia.enums.EstadoCivil;
 import com.fema.obstetricia.enums.Etinia;
+import com.fema.obstetricia.enums.Perfil;
+import com.fema.obstetricia.exceptions.AuthorizationException;
+import com.fema.obstetricia.security.UsuarioSS;
 import com.fema.obstetricia.usuario.dto.UsuarioDTO;
 
 @Service
@@ -21,11 +24,17 @@ public class UsuarioService {
 	UsuarioRepository usuarioRepository;
 	
 	public List<Usuario> getUsuarios() {
+		
+		UsuarioSS user = UsuarioLogadoService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN)) {
+			throw new AuthorizationException("Não tem permissão");
+		}
+		
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		return usuarios;
 	}
 	
-	public Usuario cadastrarUsuario(Usuario usuario) {
+	public Usuario cadastrarUsuario(Usuario usuario){
 		usuario.setId(null);
 		usuario = usuarioRepository.save(usuario);
 		return usuario;

@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +35,8 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	
+	@Column(unique=true)
 	private String email;
 	
 	@JsonIgnore
@@ -57,9 +60,9 @@ public class Usuario implements Serializable {
 	@CollectionTable
 	private Set<Integer> perfis = new HashSet<>();
 	
-	private int escolaridade;
-	private int estadoCivil;
-	private int etinia;
+	private Integer escolaridade;
+	private Integer estadoCivil;
+	private Integer etinia;
 	
 	public Usuario() {
 		
