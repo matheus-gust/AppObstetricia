@@ -49,5 +49,10 @@ public class UsuarioResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@GetMapping("/oi")
+	public ResponseEntity<String> teste(){
+		return ResponseEntity.ok().body("AAAAAAAAAAAAAA");
+	}
 
 }

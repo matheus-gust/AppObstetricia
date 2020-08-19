@@ -8,7 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fema.obstetricia.MenuItem.model.ListaConteudo;
 
 @Entity
 public class Paragrafo implements Serializable {
@@ -24,8 +29,25 @@ public class Paragrafo implements Serializable {
 	@OneToMany(mappedBy="paragrafo")
 	private List<ImagemConteudo> imagem = new ArrayList<>();
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="lista_conteudo_id")
+	private ListaConteudo listaConteudo;
+	
 	public Paragrafo() {
 	}
+	
+	
+
+	public Paragrafo(Long id, List<Conteudo> conteudo, List<ImagemConteudo> imagem, ListaConteudo listaConteudo) {
+		super();
+		this.id = id;
+		this.conteudo = conteudo;
+		this.imagem = imagem;
+		this.listaConteudo = listaConteudo;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -49,6 +71,14 @@ public class Paragrafo implements Serializable {
 
 	public void setImagem(List<ImagemConteudo> imagem) {
 		this.imagem = imagem;
+	}
+
+	public ListaConteudo getListaConteudo() {
+		return listaConteudo;
+	}
+
+	public void setListaConteudo(ListaConteudo listaConteudo) {
+		this.listaConteudo = listaConteudo;
 	}
 
 	@Override
