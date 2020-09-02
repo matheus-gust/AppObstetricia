@@ -1,8 +1,8 @@
 package com.fema.obstetricia.usuario;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +34,6 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
 	
 	@Column(unique=true)
 	private String email;
@@ -43,10 +42,10 @@ public class Usuario implements Serializable {
 	private String senha;
 	
 	@JsonFormat(pattern="dd/MM/yyyy")
-	private Date dataNascimento;
+	private LocalDate dataNascimento;
 	
-	private String planoDeSaude;
-	private String profissao;
+	private Integer planoDeSaude;
+	private Integer profissao;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="usuario")
@@ -60,26 +59,27 @@ public class Usuario implements Serializable {
 	@CollectionTable
 	private Set<Integer> perfis = new HashSet<>();
 	
+	private boolean cadastroFinalizado;
+	
 	private Integer escolaridade;
 	private Integer estadoCivil;
-	private Integer etinia;
+	private Integer etnia;
 	
 	public Usuario() {
 		
 	}
 
-	public Usuario(Long id, String nome, String email, String senha, Date dataNascimento, String planoDeSaude,
-			String profissao, EstadoCivil estadoCivil, Etinia etinia, Escolaridade escolaridade) {
+	public Usuario(Long id, String email, String senha, LocalDate dataNascimento, Integer planoDeSaude,
+			Integer profissao, EstadoCivil estadoCivil, Etinia etnia, Escolaridade escolaridade) {
 		super();
 		this.id = id;
-		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.dataNascimento = dataNascimento;
 		this.planoDeSaude = planoDeSaude;
 		this.profissao = profissao;
 		this.estadoCivil = (estadoCivil==null) ? null : estadoCivil.getCod();
-		this.etinia = (etinia==null) ? null : etinia.getCod();
+		this.etnia = (etnia==null) ? null : etnia.getCod();
 		this.escolaridade = (escolaridade==null) ? null : escolaridade.getCod();
 		addPerfil(Perfil.CLIENTE);
 	}
@@ -90,14 +90,6 @@ public class Usuario implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getEmail() {
@@ -116,27 +108,27 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getPlanoDeSaude() {
+	public Integer getPlanoDeSaude() {
 		return planoDeSaude;
 	}
 
-	public void setPlanoDeSaude(String planoDeSaude) {
+	public void setPlanoDeSaude(Integer planoDeSaude) {
 		this.planoDeSaude = planoDeSaude;
 	}
 
-	public String getProfissao() {
+	public Integer getProfissao() {
 		return profissao;
 	}
 
-	public void setProfissao(String profissao) {
+	public void setProfissao(Integer profissao) {
 		this.profissao = profissao;
 	}
 	
@@ -144,24 +136,24 @@ public class Usuario implements Serializable {
 		return EstadoCivil.toEnum(estadoCivil);
 	}
 	
-	public void setEstadoCivil(EstadoCivil estadoCivil) {
-		this.estadoCivil = estadoCivil.getCod();
+	public void setEstadoCivil(Integer estadoCivil) {
+		this.estadoCivil = estadoCivil;
 	}
 	
 	public Escolaridade getEscolaridade() {
 		return Escolaridade.toEnum(escolaridade);
 	}
 	
-	public void setEscolaridade(Escolaridade escolaridade) {
-		this.escolaridade = escolaridade.getCod();
+	public void setEscolaridade(Integer escolaridade) {
+		this.escolaridade = escolaridade;
 	}
 	
-	public Etinia getEtinia() {
-		return Etinia.toEnum(etinia);
+	public Etinia getEtnia() {
+		return Etinia.toEnum(etnia);
 	}
 	
-	public void setEtinia(Etinia etinia) {
-		this.etinia = etinia.getCod();
+	public void setEtnia(Integer etnia) {
+		this.etnia = etnia;
 	}
 	
 	public List<Gestacao> getGestacoes() {
@@ -186,6 +178,14 @@ public class Usuario implements Serializable {
 	
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
+	}
+
+	public boolean isCadastroFinalizado() {
+		return cadastroFinalizado;
+	}
+
+	public void setCadastroFinalizado(boolean cadastroFinalizado) {
+		this.cadastroFinalizado = cadastroFinalizado;
 	}
 
 	@Override

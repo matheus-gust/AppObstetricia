@@ -1,15 +1,13 @@
 package com.fema.obstetricia.usuario.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 public class UsuarioDTO {
-	
-	@NotEmpty(message="Preenchimento obrigatório")
-	private String nome;
-	
+
 	@NotEmpty(message="Preenchimento obrigatório")
 	//@Email(message="Email inválido")
 	private String email;
@@ -18,25 +16,17 @@ public class UsuarioDTO {
 	private String senha;
 
 	@JsonFormat(pattern="dd/MM/yyyy")
-	private Date dataNascimento;
+	private LocalDate dataNascimento;
 	
-	private String planoDeSaude;
+	private Integer planoDeSaude;
 	
-	private String profissao;
+	private Integer profissao;
 	
-	private int escolaridade;
+	private Integer escolaridade;
 	
-	private int estadoCivil;
+	private Integer estadoCivil;
 	
-	private int etinia;
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	private Integer etinia;
 
 	public String getEmail() {
 		return email;
@@ -54,27 +44,27 @@ public class UsuarioDTO {
 		this.senha = senha;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getPlanoDeSaude() {
+	public Integer getPlanoDeSaude() {
 		return planoDeSaude;
 	}
 
-	public void setPlanoDeSaude(String planoDeSaude) {
+	public void setPlanoDeSaude(Integer planoDeSaude) {
 		this.planoDeSaude = planoDeSaude;
 	}
 
-	public String getProfissao() {
+	public Integer getProfissao() {
 		return profissao;
 	}
 
-	public void setProfissao(String profissao) {
+	public void setProfissao(Integer profissao) {
 		this.profissao = profissao;
 	}
 
