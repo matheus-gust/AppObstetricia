@@ -40,6 +40,7 @@ public class UsuarioService {
 
 	public Usuario cadastrarUsuario(Usuario usuario) {
 		usuario.setId(null);
+		usuario.setCadastroFinalizado(false);
 		usuario = usuarioRepository.save(usuario);
 		return usuario;
 	}

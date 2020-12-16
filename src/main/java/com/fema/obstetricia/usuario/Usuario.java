@@ -24,7 +24,7 @@ import com.fema.obstetricia.enums.Escolaridade;
 import com.fema.obstetricia.enums.EstadoCivil;
 import com.fema.obstetricia.enums.Etinia;
 import com.fema.obstetricia.enums.Perfil;
-import com.fema.obstetricia.forms.Resposta;
+import com.fema.obstetricia.forms.model.Resposta;
 import com.fema.obstetricia.gestacao.Gestacao;
 
 @Entity
@@ -51,9 +51,8 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<Gestacao> gestacoes = new ArrayList<>();
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="usuario")
-	private List<Resposta> respostas = new ArrayList<>();
+	@OneToMany(mappedBy = "usuario")
+	private List<Resposta> respostas = new ArrayList<Resposta>();
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable
@@ -164,14 +163,6 @@ public class Usuario implements Serializable {
 		this.gestacoes = gestacoes;
 	}
 	
-	public List<Resposta> getRespostas() {
-		return respostas;
-	}
-
-	public void setRespostas(List<Resposta> respostas) {
-		this.respostas = respostas;
-	}
-
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
@@ -186,6 +177,14 @@ public class Usuario implements Serializable {
 
 	public void setCadastroFinalizado(boolean cadastroFinalizado) {
 		this.cadastroFinalizado = cadastroFinalizado;
+	}
+
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+
+	public void setRespostas(List<Resposta> respostas) {
+		this.respostas = respostas;
 	}
 
 	@Override

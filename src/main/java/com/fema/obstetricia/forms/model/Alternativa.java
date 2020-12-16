@@ -1,4 +1,4 @@
-package com.fema.obstetricia.forms;
+package com.fema.obstetricia.forms.model;
 
 import java.io.Serializable;
 
@@ -9,10 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fema.obstetricia.usuario.Usuario;
 
 @Entity
-public class Resposta implements Serializable {
+public class Alternativa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -20,23 +21,19 @@ public class Resposta implements Serializable {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="usuario_id")
-	private Usuario usuario;
-	
-	@ManyToOne
 	@JoinColumn(name="questao_id")
+	@JsonIgnore
 	private Questao questao;
 	
 	private String resposta;
 	
-	public Resposta() {
+	public Alternativa() {
 		
 	}
 
-	public Resposta(int id, Usuario usuario, Questao questao, String resposta) {
+	public Alternativa(int id, Usuario usuario, Questao questao, String resposta) {
 		super();
 		this.id = id;
-		this.usuario = usuario;
 		this.questao = questao;
 		this.resposta = resposta;
 	}
@@ -47,14 +44,6 @@ public class Resposta implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public Questao getQuestao() {
@@ -89,7 +78,7 @@ public class Resposta implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Resposta other = (Resposta) obj;
+		Alternativa other = (Alternativa) obj;
 		if (id != other.id)
 			return false;
 		return true;

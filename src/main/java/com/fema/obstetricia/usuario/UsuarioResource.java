@@ -45,6 +45,7 @@ public class UsuarioResource {
 
 	@PostMapping(value = "/cadastro-sociodemograficos")
 	public ResponseEntity<Void> cadastrarDadosSociodemograficos(@Valid @RequestBody DadosSociodemograficos dados) {
+		System.out.println(dados.getDataNascimento());
 		usuarioService.cadastrarDadosSociodemograficos(dados);
 		return ResponseEntity.ok().body(null);
 	}

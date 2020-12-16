@@ -1,4 +1,4 @@
-package com.fema.obstetricia.forms;
+package com.fema.obstetricia.forms.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Questao implements Serializable {
@@ -18,10 +22,14 @@ public class Questao implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String pergunta;
-	private int tipoQuestionario;
+	
+	@ManyToOne
+	@JoinColumn(name = "formulario_id")
+	@JsonIgnore
+	Formulario formulario;
 	
 	@OneToMany(mappedBy="questao")
-	private List<Resposta> respostas = new ArrayList<>();
+	private List<Alternativa> alternativas = new ArrayList<>();
 	
 	public Questao() {
 		
@@ -31,7 +39,6 @@ public class Questao implements Serializable {
 		super();
 		this.id = id;
 		this.pergunta = pergunta;
-		this.tipoQuestionario = tipoQuestionario;
 	}
 
 	public int getId() {
@@ -50,20 +57,12 @@ public class Questao implements Serializable {
 		this.pergunta = pergunta;
 	}
 
-	public int getTipoQuestionario() {
-		return tipoQuestionario;
+	public List<Alternativa> getRespostas() {
+		return alternativas;
 	}
 
-	public void setTipoQuestionario(int tipoQuestionario) {
-		this.tipoQuestionario = tipoQuestionario;
-	}
-
-	public List<Resposta> getRespostas() {
-		return respostas;
-	}
-
-	public void setRespostas(List<Resposta> respostas) {
-		this.respostas = respostas;
+	public void setRespostas(List<Alternativa> alternativas) {
+		this.alternativas = alternativas;
 	}
 
 	@Override
